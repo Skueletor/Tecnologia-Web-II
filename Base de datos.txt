@@ -1,0 +1,26 @@
+-- Tabla de puestos
+CREATE TABLE tbl_puesto (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombredelpuesto VARCHAR(255)
+);
+
+CREATE TABLE empleados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    primernombre VARCHAR(50),
+    segundonombre VARCHAR(50),
+    primerapellido VARCHAR(50),
+    segundoapellido VARCHAR(50),
+    foto VARCHAR(255), -- nombre del archivo de imagen
+    cv VARCHAR(255), -- nombre del archivo PDF u otro
+    id_puesto INT,
+    fechaingreso DATE,
+    FOREIGN KEY (id_puesto) REFERENCES puestos(id)
+);
+
+-- Tabla de usuarios (solo corrección de typo)
+CREATE TABLE tbl_usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario VARCHAR(100),
+    password VARCHAR(100),  -- Corregido de 'passwword'
+    correo VARCHAR(100)
+);
