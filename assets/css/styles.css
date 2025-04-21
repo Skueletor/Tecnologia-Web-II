@@ -78,6 +78,8 @@ body {
     text-transform: uppercase;
     font-size: 0.75rem;
     letter-spacing: 0.5px;
+    cursor: pointer !important;
+    pointer-events: auto !important;
 }
 
 .data-table tbody td {

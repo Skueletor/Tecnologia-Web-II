@@ -1,8 +1,7 @@
 <?php
 include("../../bd.php");
 
-// Cargar dompdf
-require_once '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/dompdf/vendor/autoload.php';
 use Dompdf\Dompdf;
 
 // Verificar si se proporcionó un ID
@@ -169,11 +168,11 @@ if (isset($_GET['txtID'])) {
             <div class="signature">
                 <p><strong>Ing. Pablo Alvaro Moscoso</strong></p>
                 <p>Director General</p>
-                <p>Universidad Domingo Savio</p>
+                <p>Universidad Privada Domingo Savio</p>
             </div>
             
             <div class="footer">
-                Universidad Domingo Savio | Sistema de Gestión de Empleados | Documento generado el ' . date('d/m/Y H:i:s') . '
+                Universidad Privada Domingo Savio | Sistema de Gestión de Empleados | Documento generado el ' . date('d/m/Y H:i:s') . '
             </div>
         </body>
         </html>';
@@ -243,11 +242,11 @@ if (isset($_GET['txtID'])) {
                 </div>
                 <div class="col-6 text-center">
                     <img src="<?php echo $url_base; ?>assets/images/logo-upds.png" alt="Logo Universidad" class="img-fluid mb-2" style="max-height: 60px;">
-                    <h6 class="text-muted">UNIVERSIDAD DOMINGO SAVIO</h6>
+                    <h6 class="text-muted">UNIVERSIDAD PRIVADA DOMINGO SAVIO</h6>
                 </div>
                 <div class="col-3 text-end">
                     <p class="mb-0"><?php echo $fechaActual; ?></p>
-                    <small class="text-muted">Ref: UDS-RH-<?php echo date('Y'); ?>-<?php echo str_pad($txtID, 3, '0', STR_PAD_LEFT); ?></small>
+                    <small class="text-muted">Ref: UDPS-RH-<?php echo date('Y'); ?>-<?php echo str_pad($txtID, 3, '0', STR_PAD_LEFT); ?></small>
                 </div>
             </div>
 
@@ -296,7 +295,7 @@ if (isset($_GET['txtID'])) {
                 <div class="firma">
                     <p><strong>Ing. Pablo Alvaro Moscoso</strong></p>
                     <p>Director General</p>
-                    <p>Universidad Domingo Savio</p>
+                    <p>Universidad Privada Domingo Savio</p>
                 </div>
             </div>
             
