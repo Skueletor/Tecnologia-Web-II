@@ -1,5 +1,13 @@
 <?php
 $url_base = "http://localhost:80/app/";
+
+// Start session if not already started
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Check if user is logged in - for consistent header display
+$logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 ?>
 
 <!doctype html>
@@ -40,6 +48,7 @@ $url_base = "http://localhost:80/app/";
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
+                        <?php if ($logged_in): ?>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
                                 <a class="nav-link px-3" href="<?php echo $url_base; ?>">
@@ -61,12 +70,18 @@ $url_base = "http://localhost:80/app/";
                                     <i class="fas fa-user-cog me-1"></i> Usuarios
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3" href="<?php echo $url_base; ?>cerrar.php">
-                                    <i class="fas fa-sign-out-alt me-1"></i> Cerrar sesión
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user-circle me-1"></i> <?php echo $_SESSION['usuario']; ?>
                                 </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="<?php echo $url_base; ?>cerrar.php">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Cerrar sesión
+                                    </a></li>
+                                </ul>
                             </li>
                         </ul>
+                        <?php endif; ?>
                     </div>
                 </div>
             </nav>

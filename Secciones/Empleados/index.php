@@ -1,4 +1,7 @@
-<?php include("../../bd.php");
+<?php 
+// Include session validation
+include("../../session.php");
+include("../../bd.php");
 
 // Eliminar un empleado y sus archivos
 if (isset($_GET["txtID"])) {
@@ -63,6 +66,19 @@ $lista_empleados = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
     <div class="col-md-6 text-md-end mt-3 mt-md-0">
+        <div class="btn-group me-2">
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-download me-2"></i>Descargar
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="../../api/download.php?type=employee_list&format=pdf" target="_blank"><i class="fas fa-file-pdf text-danger me-2"></i>PDF</a></li>
+                <li><a class="dropdown-item" href="../../api/download.php?type=employee_list&format=excel" target="_blank"><i class="fas fa-file-excel text-success me-2"></i>Excel</a></li>
+                <li><a class="dropdown-item" href="../../api/download.php?type=employee_list&format=csv" target="_blank"><i class="fas fa-file-csv text-primary me-2"></i>CSV</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../../descargas.php"><i class="fas fa-cog me-2"></i>Más opciones</a></li>
+            </ul>
+        </div>
+        
         <a class="btn btn-primary" href="crear.php">
             <i class="fas fa-plus-circle me-2"></i>Nuevo Empleado
         </a>

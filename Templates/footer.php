@@ -23,7 +23,57 @@
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
         
+        <!-- RSS and Download Features -->
         <script>
+            // RSS Reader
+            document.addEventListener('DOMContentLoaded', function() {
+                const rssFeeds = document.querySelectorAll('.rss-feed');
+                
+                rssFeeds.forEach(container => {
+                    const feedUrl = container.dataset.feedUrl;
+                    const maxItems = parseInt(container.dataset.maxItems) || 3;
+                    
+                    if (feedUrl) {
+                        fetch(`<?php echo $url_base; ?>api/rss-proxy.php?url=${encodeURIComponent(feedUrl)}&max=${maxItems}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                let html = '';
+                                
+                                if (data.error) {
+                                    html = `<div class="alert alert-warning mt-2">No se pudieron cargar las noticias: ${data.error}</div>`;
+                                } else if (data.items && data.items.length > 0) {
+                                    html = '<ul class="list-group">';
+                                    
+                                    data.items.forEach(item => {
+                                        const title = item.title || 'Sin título';
+                                        const link = item.link || '#';
+                                        const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString() : '';
+                                        
+                                        html += `
+                                            <li class="list-group-item border-0 px-0">
+                                                <a href="${link}" target="_blank" class="text-decoration-none">
+                                                    <h6 class="mb-1">${title}</h6>
+                                                </a>
+                                                ${date ? `<small class="text-muted">${date}</small>` : ''}
+                                            </li>
+                                        `;
+                                    });
+                                    
+                                    html += '</ul>';
+                                } else {
+                                    html = '<div class="alert alert-info mt-2">No hay noticias disponibles</div>';
+                                }
+                                
+                                container.innerHTML = html;
+                            })
+                            .catch(() => {
+                                container.innerHTML = '<div class="alert alert-danger mt-2">Error al cargar el feed</div>';
+                            });
+                    }
+                });
+            });
+            
+            // DataTables Initialization
             $(document).ready(function() {
                 $('.data-table').DataTable({
                     responsive: true,
@@ -55,7 +105,6 @@
                          "<'row'<'col-sm-12'tr>>" +
                          "<'dataTables_footer_controls'<'row'<'col-sm-5'i><'col-sm-7'p>>>",
                     initComplete: function() {
-                        // Reorganizar y mejorar los controles
                         rearrangeDataTableControls();
                     }
                 });
@@ -68,7 +117,7 @@
             // Función para reorganizar los controles de DataTables
             function rearrangeDataTableControls() {
                 $('.dataTables_filter label').contents().filter(function() {
-                    return this.nodeType === 3; // Nodo de texto
+                    return this.nodeType === 3;
                 }).remove();
                 
                 $('.dataTables_filter input').attr('placeholder', 'Buscar registros...');

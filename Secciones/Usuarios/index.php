@@ -1,4 +1,6 @@
 <?php
+// Include session validation
+include("../../session.php");
 include("../../bd.php");
 
 // Eliminar usuario
